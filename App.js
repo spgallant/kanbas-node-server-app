@@ -1,11 +1,14 @@
 //const express = require('express')
+
 import express from 'express';
-const app = express()
+import Hello from "./Hello.js"
+import Lab5 from "./Lab5/index.js";
 
-app.get('/hello', (req, res) => {res.send('Life is Good!')})
+const app = express();
+app.use(express.json());
 
-app.get('/', (req, res) => {
-    res.send('Welcome to Full Stack Development!')})
+Lab5(app);
+Hello(app);
 
     
 app.listen(4000)
