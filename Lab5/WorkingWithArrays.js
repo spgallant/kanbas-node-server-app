@@ -6,6 +6,7 @@ let todos = [ { id: 1, title: "Task 1", completed: false },  { id: 2, title: "Ta
 
 export default function WorkingWithArrays(app) {
 
+    //create a new todo item
     app.get("/lab5/todos/create", (req, res) => {
 
         const newTodo = {
@@ -24,7 +25,7 @@ export default function WorkingWithArrays(app) {
 //     res.json(todos);
 //   });
 
-
+    //pull all completed todo items (filter on completed = true)
     app.get("/lab5/todos", (req, res) => {
         const { completed } = req.query;
 
@@ -40,7 +41,7 @@ export default function WorkingWithArrays(app) {
     });
 
 
-
+    //access todo item [by] id
     app.get("/lab5/todos/:id", (req, res) => {
         const { id } = req.params;
         const todo = todos.find((t) => t.id === parseInt(id));
@@ -48,7 +49,7 @@ export default function WorkingWithArrays(app) {
     });
 
 
-
+    // delete todo item based on its inputted id
     app.get("/lab5/todos/:id/delete", (req, res) => {
 
         const { id } = req.params;
@@ -59,7 +60,7 @@ export default function WorkingWithArrays(app) {
       });
     
 
-      
+
     // 3.4.6 & 3.4.7 updates to array via id
     app.get("/lab5/todos/:id/title/:title", (req, res) => {
         const { id, title } = req.params;
