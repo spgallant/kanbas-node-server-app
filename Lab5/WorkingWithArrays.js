@@ -6,7 +6,7 @@ let todos = [ { id: 1, title: "Task 1", completed: false },  { id: 2, title: "Ta
 
 export default function WorkingWithArrays(app) {
 
-    //create a new todo item
+    //create a new todo item (incorrect, w/ get)
     app.get("/lab5/todos/create", (req, res) => {
 
         const newTodo = {
@@ -16,9 +16,19 @@ export default function WorkingWithArrays(app) {
         };
 
         todos.push(newTodo);
-        res.json(todos);
+        res.json(todos); //returns all Todo items
 
-      });
+    });
+
+    // create a new todo item w/ post
+    app.post("/lab5/todos", (req, res) => {
+    
+        const newTodo = { ...req.body,  id: new Date().getTime() };
+
+        todos.push(newTodo);
+        res.json(newTodo); // return only new Todo item
+    });
+    
     
 
 //   app.get("/lab5/todos", (req, res) => {
@@ -49,19 +59,38 @@ export default function WorkingWithArrays(app) {
     });
 
 
-    // delete todo item based on its inputted id
+    // delete todo item based on its inputted id (incorrect using get)
     app.get("/lab5/todos/:id/delete", (req, res) => {
 
         const { id } = req.params;
         const todoIndex = todos.findIndex((t) => t.id === parseInt(id));
 
         todos.splice(todoIndex, 1);
-        res.json(todos);
-      });
+        res.json(todos); //respond with (remaining) todos
+    });
+
+    //delete todo item using delete 
+    app.delete("/lab5/todos/:id", (req, res) => {
+        const { id } = req.params;
+        const todoIndex = todos.findIndex((t) => t.id === parseInt(id));
+
+        if (todoIndex === -1) {
+            res.status(404).json({ message: `Unable to delete Todo with ID ${id}` });
+            return;
+        }
+      
+
+        todos.splice(todoIndex, 1);
+        res.sendStatus(200); //respond with a status confirmation (let inteface update state)
+    });
     
 
 
-    // 3.4.6 & 3.4.7 updates to array via id
+
+    
+
+
+    // 3.4.6 & 3.4.7 updates to array via id (incorrect w/ get)
     app.get("/lab5/todos/:id/title/:title", (req, res) => {
         const { id, title } = req.params;
         const todo = todos.find((t) => t.id === parseInt(id));
@@ -82,6 +111,32 @@ export default function WorkingWithArrays(app) {
         todo.description = description;
         res.json(todos);
     });
+
+
+
+    // 3.6.3 update item with put
+    app.put("/lab5/todos/:id", (req, res) => {
+        const { id } = req.params;
+
+        const todoIndex = todos.findIndex((t) => t.id === parseInt(id));
+        if (todoIndex === -1) {
+        res.status(404).json({ message: `Unable to update Todo with ID ${id}` });
+        return;
+        }
+
+
+        todos = todos.map((t) => {
+          if (t.id === parseInt(id)) {
+            return { ...t, ...req.body };
+          }
+
+          return t;
+        });
+
+        res.sendStatus(200); //responds w/ OK status code, not with new array
+
+    });
+    
     
 
 };

@@ -8,7 +8,7 @@ import cors from "cors";
 
 const app = express(); // Create an Express application
 app.use(cors()); 
-app.use(express.json());
+app.use(express.json()); // enables server to parse JSON data from request body | must follow cors stmnt
 
 Lab5(app);
 Hello(app);
