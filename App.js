@@ -4,6 +4,8 @@ import express from 'express'; // Import the Express module
 import Hello from "./Hello.js"
 import Lab5 from "./Lab5/index.js";
 import CourseRoutes from "./Kanbas/Courses/routes.js"; //add courses routes
+import ModuleRoutes from './Kanbas/Modules/routes.js'; //add modules routes
+import AssignmentRoutes from './Kanbas/Assignments/routes.js'; //add assignments routes
 import cors from "cors";
 
 
@@ -13,6 +15,8 @@ app.use(express.json()); // enables server to parse JSON data from request body 
 
 // remaining work below (after cors and express lines)
 
+AssignmentRoutes(app);
+ModuleRoutes(app);
 CourseRoutes(app);
 Lab5(app);
 Hello(app);
