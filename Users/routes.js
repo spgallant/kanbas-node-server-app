@@ -12,7 +12,7 @@ export default function UserRoutes(app) {
   app.post("/api/users", createUser);
 
 
-  
+  // delete user fn
   const deleteUser = async (req, res) => { 
     const status = await dao.deleteUser(req.params.userId);
     res.json(status);
