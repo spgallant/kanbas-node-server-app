@@ -15,16 +15,18 @@ import UserRoutes from "./Users/routes.js";
 
 
 const CONNECTION_STRING = process.env.MONGO_CONNECTION_STRING || "mongodb://127.0.0.1:27017/kanbas" //connect to kanbas db
+console.log(CONNECTION_STRING);
 mongoose.connect(CONNECTION_STRING);
 
-
+console.log(process.env.NETLIFY_URL);
 
 const app = express(); // Create an Express application
 
 app.use(cors({
     credentials: true, // support cookies
     origin: process.env.NETLIFY_URL || "http://localhost:3000", // restrict cross origin resource, diff url in dev vs prod
-  })
+  
+    })
  ); 
 
  app.use(express.json()); // enables server to parse JSON data from request body | must follow cors stmnt
