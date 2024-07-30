@@ -26,29 +26,34 @@ export default function UserRoutes(app) {
 
 
   const findAllUsers = async (req, res) => {  
-    console.log("Req", req);
-    // console.log('Request Method:', req.method);
-    // console.log('Request URL:', req.url);
-    // console.log('Request Headers:', req.headers);
-    const { role, name } = req.query; // parse role from query string, name from "
-    if (role) { // if role matches 
-      const users = await dao.findUsersByRole(role); // use dao to retrieve users with that role
-      res.json(users); // respond with json of filtered user list
-      console.log("Access findAllUsers role if stmnt");
-      return; //exit the fn
+    try {
+      console.log("Req", req);
+      // console.log('Request Method:', req.method);
+      // console.log('Request URL:', req.url);
+      // console.log('Request Headers:', req.headers);
+      const { role, name } = req.query; // parse role from query string, name from "
+      if (role) { // if role matches 
+        const users = await dao.findUsersByRole(role); // use dao to retrieve users with that role
+        res.json(users); // respond with json of filtered user list
+        console.log("Access findAllUsers role if stmnt");
+        return; //exit the fn
+        
+      }
+
+      if (name) { //if name matches
+        const users = await dao.findUsersByPartialName(name);  // use dao to retrieve users with that name
+        res.json(users);
+        console.log("Access findAllUsers name if stmnt");
+        return;
+      }
+
       
-    }
-
-    if (name) { //if name matches
-      const users = await dao.findUsersByPartialName(name);  // use dao to retrieve users with that name
+      const users = await dao.findAllUsers(); // else find all users regardless of role?
       res.json(users);
-      console.log("Access findAllUsers name if stmnt");
-      return;
-    }
-
-    
-    const users = await dao.findAllUsers(); // else find all users regardless of role?
-    res.json(users);
+  } catch (error) {
+      console.error('Error in findAllUsers:', error);
+        res.status(500).send('Internal Server Error');
+  }
     
   };
   app.get("/api/users", findAllUsers);
