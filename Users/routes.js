@@ -28,9 +28,9 @@ export default function UserRoutes(app) {
   const findAllUsers = async (req, res) => {  
     try {
       console.log("Req", req);
-      // console.log('Request Method:', req.method);
-      // console.log('Request URL:', req.url);
-      // console.log('Request Headers:', req.headers);
+      console.log('Request Method:', req.method);
+      console.log('Request URL:', req.url);
+      console.log('Request Headers:', req.headers);
       const { role, name } = req.query; // parse role from query string, name from "
       if (role) { // if role matches 
         const users = await dao.findUsersByRole(role); // use dao to retrieve users with that role
@@ -52,8 +52,16 @@ export default function UserRoutes(app) {
       res.json(users);
   } catch (error) {
       console.error('Error in findAllUsers:', error);
-        res.status(500).send('Internal Server Error');
-  }
+      console.error('Error in findAllUsers:', error.message);
+      console.error('Stack Trace:', error.stack);
+      console.error('Request details:', {
+        method: req.method,
+        url: req.url,
+        headers: req.headers,
+        query: req.query
+      });
+      res.status(500).json({ error: 'Internal Server Error', message: error.message });
+    }
     
   };
   app.get("/api/users", findAllUsers);
