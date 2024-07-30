@@ -25,5 +25,7 @@ export const findModulesByPartialName = (partialName) => {
 // UPDATE
 export const updateModule = (moduleId, module) =>  model.updateOne({ _id: moduleId }, { $set: module });
 
+
+// DELETE
 export const deleteModule = (moduleId) => model.deleteOne({ _id: moduleId });
 

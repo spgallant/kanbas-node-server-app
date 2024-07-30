@@ -6,7 +6,7 @@ export const createUser = (user) => {
 }
   
 export const findAllUsers = () => model.find();
-console.log("findAllUsers Dao", findAllUsers);
+// console.log("findAllUsers Dao", findAllUsers);
 export const findUserById = (userId) => model.findById(userId);
 export const findUserByUsername = (username) =>  model.findOne({ username: username });
 export const findUserByCredentials = (username, password) =>  model.findOne({ username, password });

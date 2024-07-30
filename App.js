@@ -35,7 +35,7 @@ app.use(cors({
     })
  ); 
 
- app.use(express.json()); // enables server to parse JSON data from request body | must follow cors stmnt
+
 
 // const sessionOptions = { //configure after configuring cors
 //     secret: "any string", //default session config for local (update further for remote server)
@@ -60,7 +60,7 @@ if (process.env.NODE_ENV !== "development") {  // in production
     };
 }
 app.use(session(sessionOptions));
-  
+app.use(express.json()); // enables server to parse JSON data from request body | must follow cors stmnt
 
 UserRoutes(app);
 
