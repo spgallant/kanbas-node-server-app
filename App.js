@@ -16,9 +16,15 @@ import UserRoutes from "./Users/routes.js";
 
 const CONNECTION_STRING = process.env.MONGO_CONNECTION_STRING || "mongodb://127.0.0.1:27017/kanbas" //connect to kanbas db
 console.log(CONNECTION_STRING);
-mongoose.connect(CONNECTION_STRING);
+// mongoose.connect(CONNECTION_STRING);
 
-console.log(process.env.NETLIFY_URL);
+console.log("App.js process.env.NETLIFY_URL", process.env.NETLIFY_URL);
+
+
+console.log("MongoDB Connection String:", CONNECTION_STRING);
+mongoose.connect(CONNECTION_STRING, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log("Connected to MongoDB"))
+  .catch(err => console.error("MongoDB connection error:", err));
 
 const app = express(); // Create an Express application
 
